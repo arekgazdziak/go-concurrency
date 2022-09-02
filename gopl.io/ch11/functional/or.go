@@ -19,7 +19,7 @@ func Or(channels ...<-chan interface{}) <-chan interface{} {
 			case <-channels[0]:
 			case <-channels[1]:
 			}
-		case 3:
+		default:
 			select {
 			case <-channels[0]:
 			case <-channels[1]:

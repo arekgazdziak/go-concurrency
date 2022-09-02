@@ -9,13 +9,18 @@ func main() {
 	go goOne(ch1)
 	go goTwo(ch2)
 
-	for i := 0; i < 2; i++ {
-		select {
-		case msg1 := <-ch1:
-			fmt.Println(msg1)
-		case msg2 := <-ch2:
-			fmt.Println(msg2)
-		}
+	select {
+	case msg1 := <-ch1:
+		fmt.Println(msg1)
+	case msg2 := <-ch2:
+		fmt.Println(msg2)
+	}
+
+	select {
+	case msg1 := <-ch1:
+		fmt.Println(msg1)
+	case msg2 := <-ch2:
+		fmt.Println(msg2)
 	}
 
 }
