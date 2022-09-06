@@ -9,13 +9,12 @@ import (
 	"gopl.io/ch11/functional"
 )
 
+type superviseeFn func(
+	done <-chan interface{},
+	pulseInterval time.Duration,
+) (heartbeat <-chan interface{})
+
 func main() {
-
-	type superviseeFn func(
-		done <-chan interface{},
-		pulseInterval time.Duration,
-	) (heartbeat <-chan interface{})
-
 	newSupervisor := func(
 		timeout time.Duration,
 		childGoroutine superviseeFn,
@@ -125,9 +124,9 @@ func main() {
 
 	task, intStream := childWork2(done, 1, 2, 3, 7, 4, 5)
 
-	taskWithSupervisor := newSupervisor(30*time.Millisecond, task)
+	taskWithSupervisor := newSupervisor(20*time.Millisecond, task)
 
-	taskWithSupervisor(done, 5*time.Millisecond)
+	taskWithSupervisor(done, 10*time.Millisecond)
 
 	time.AfterFunc(10*time.Second, func() {
 		log.Println("main, halting supervisor and its childs")

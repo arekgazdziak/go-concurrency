@@ -45,7 +45,6 @@ func Tick(done <-chan interface{}, pulseInterval time.Duration) (<-chan interfac
 				handleWork(time)
 			}
 		}
-
 	}()
 
 	return heartbeats, result
