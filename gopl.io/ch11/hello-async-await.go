@@ -17,26 +17,27 @@ func main() {
 	awaitCh2 := asyncTask()
 
 	select {
-	case i := <-awaitCh1:
-		if i == 0 {
+	// receiver can test whether a channel has been closed by assigning a second parameter to the receive expression: https://go.dev/tour/concurrency/4
+	case i, ok := <-awaitCh1:
+		if !ok {
 			return
 		}
 		fmt.Printf("First done: %v\n", i)
-	case i := <-awaitCh2:
-		if i == 0 {
+	case i, ok := <-awaitCh2:
+		if !ok {
 			return
 		}
 		fmt.Printf("Second done: %v\n", i)
 	}
 
 	select {
-	case i := <-awaitCh1:
-		if i == 0 {
+	case i, ok := <-awaitCh1:
+		if !ok {
 			return
 		}
 		fmt.Printf("First done: %v\n", i)
-	case i := <-awaitCh2:
-		if i == 0 {
+	case i, ok := <-awaitCh2:
+		if !ok {
 			return
 		}
 		fmt.Printf("Second done: %v\n", i)
