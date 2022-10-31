@@ -47,7 +47,19 @@ func main() {
 						case <-pulse:
 							select {
 							case heartbeat <- struct{}{}:
+								select {
+								case <-childHeartbeat:
+									log.Println("child: hearbeat received")
+									continue monitorLoop
+								default:
+								}
 							default:
+								select {
+								case <-childHeartbeat:
+									log.Println("child: hearbeat received")
+									continue monitorLoop
+								default:
+								}
 								log.Println("supervisor: hearbeat default")
 							}
 						case <-childHeartbeat:
